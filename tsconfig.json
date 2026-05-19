@@ -23,7 +23,10 @@
     "noUncheckedSideEffectImports": true,
     "allowJs": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/app/*": ["./src/app/*"],
+      "@/pages/*": ["./src/pages/*"],
+      "@/shared/*": ["./src/shared/*"]
     }
   }
 }
