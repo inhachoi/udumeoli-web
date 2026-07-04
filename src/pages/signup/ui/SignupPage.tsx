@@ -3,10 +3,11 @@ import { useRouter } from "@tanstack/react-router"
 import { Image as ImageIcon, MapPin } from "lucide-react"
 
 import { Button } from "@/shared/ui/button"
+import { ButtonCta } from "@/shared/ui/button-cta"
 import { DialogSeparator, DialogTitle } from "@/shared/ui/dialog"
 import { Header } from "@/shared/ui/header"
 import { MobileLayout } from "@/shared/ui/mobile-layout"
-import { ProfileContainer } from "@/shared/ui/profile-container"
+import { Profile } from "@/shared/ui/profile"
 import { TextField } from "@/shared/ui/text-field"
 import { openAlert, openModal } from "@/shared/ui/modal"
 import { MOCK_USER, useSessionStore } from "@/entities/user"
@@ -83,10 +84,11 @@ export function SignupPage() {
       />
 
       <main className="flex flex-1 flex-col items-center gap-8 px-5 pt-8">
-        <ProfileContainer
-          size="lg"
+        <Profile
+          size="xl"
+          type="add-image"
           src={profileImage ?? undefined}
-          onEdit={() =>
+          onImageClick={() =>
             openProfilePhotoSheet({
               onPick: setProfileImage,
               onRemove: () => setProfileImage(null),
@@ -103,14 +105,9 @@ export function SignupPage() {
       </main>
 
       <div className="px-5 pb-8">
-        <Button
-          size="cta"
-          className="w-full"
-          disabled={!nickname.trim()}
-          onClick={handleSubmit}
-        >
+        <ButtonCta disabled={!nickname.trim()} onClick={handleSubmit}>
           완료
-        </Button>
+        </ButtonCta>
       </div>
     </MobileLayout>
   )
