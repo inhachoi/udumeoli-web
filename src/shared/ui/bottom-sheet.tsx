@@ -32,12 +32,16 @@ function BottomSheetContent({
   children,
   variant,
   showCloseButton = true,
+  showOverlay = true,
   ...props
 }: ComponentProps<typeof DialogPrimitive.Content> &
-  VariantProps<typeof sheetVariants> & { showCloseButton?: boolean }) {
+  VariantProps<typeof sheetVariants> & {
+    showCloseButton?: boolean
+    showOverlay?: boolean
+  }) {
   return (
     <DialogPortal>
-      <DialogOverlay />
+      {showOverlay ? <DialogOverlay /> : null}
       <DialogPrimitive.Content
         data-slot="bottom-sheet-content"
         className={cn(sheetVariants({ variant }), className)}
@@ -172,6 +176,8 @@ function BottomSheetActions({ className, ...props }: ComponentProps<"div">) {
 type BottomSheetOptions = {
   variant?: VariantProps<typeof sheetVariants>["variant"]
   showCloseButton?: boolean
+  showOverlay?: boolean
+  className?: string
 }
 
 /**
@@ -189,6 +195,8 @@ export function openBottomSheet(
       <BottomSheetContent
         variant={options?.variant}
         showCloseButton={options?.showCloseButton}
+        showOverlay={options?.showOverlay}
+        className={options?.className}
         onCloseAutoFocus={() => unmount()}
       >
         {render({ close })}
