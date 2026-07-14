@@ -150,15 +150,31 @@
     --color-blue-900: #2d4f69;
 
     --color-red-50: #fff2f1;
+    --color-red-100-alpha: color-mix(in srgb, var(--color-red-100) 60%, transparent);
     --color-red-100: #ffc5bf;
     --color-red-500: #e8453a;
     --color-red-600: #c42e24;
 
+    /* 100-alpha: 100의 60% 투명 버전 (Figma 1319-14769) */
+    --color-orange-100-alpha: color-mix(in srgb, var(--color-orange-100) 60%, transparent);
     --color-orange-100: #ffdab5;
+    --color-orange-500: #e3800f;
+
+    --color-yellow-100-alpha: color-mix(in srgb, var(--color-yellow-100) 60%, transparent);
     --color-yellow-100: #fff0b1;
+    --color-yellow-500: #dbb71f;
+
+    --color-green-100-alpha: color-mix(in srgb, var(--color-green-100) 60%, transparent);
     --color-green-100: #c8f0c0;
+    --color-green-500: #7cb571;
+
+    --color-indigo-100-alpha: color-mix(in srgb, var(--color-indigo-100) 60%, transparent);
     --color-indigo-100: #c4c8ff;
+    --color-indigo-500: #7b7fbf;
+
+    --color-violet-100-alpha: color-mix(in srgb, var(--color-violet-100) 60%, transparent);
     --color-violet-100: #e4bfff;
+    --color-violet-500: #b689d7;
 
     /* ===== Semantic Color (Design System v1.0.0) ===== */
     /* 이름 규칙: color-<property: bg|fg|stroke>-<role>-<variant>[-state] → primitive 참조 */
@@ -315,6 +331,47 @@
     --text-e4--line-height: 16px;
     --text-e4--font-weight: 400;
     --text-e4--letter-spacing: 0px;
+
+    /* ===== Animation ===== */
+    /* 갤러리 사진 업로드 직후 슬롯 팝 — transform만 사용(GPU 가속) */
+    --animate-photo-pop: photo-pop 0.45s ease-out both;
+
+    @keyframes photo-pop {
+        0% {
+            transform: scale(0.92);
+        }
+        45% {
+            transform: scale(1.05) rotate(1.2deg);
+        }
+        75% {
+            transform: scale(0.98) rotate(-0.6deg);
+        }
+        100% {
+            transform: scale(1) rotate(0deg);
+        }
+    }
+
+    /* 전원 업로드 완료 순간 행 전체 좌우 물결 — --wiggle-dir(±1)로 슬롯별 방향 엇갈림 */
+    --animate-photo-wiggle: photo-wiggle 0.7s ease-in-out both;
+
+    @keyframes photo-wiggle {
+        0%,
+        100% {
+            transform: translateX(0) rotate(0deg);
+        }
+        25% {
+            transform: translateX(calc(var(--wiggle-dir, 1) * 4px))
+                rotate(calc(var(--wiggle-dir, 1) * 1.5deg));
+        }
+        55% {
+            transform: translateX(calc(var(--wiggle-dir, 1) * -3px))
+                rotate(calc(var(--wiggle-dir, 1) * -1deg));
+        }
+        80% {
+            transform: translateX(calc(var(--wiggle-dir, 1) * 1.5px))
+                rotate(calc(var(--wiggle-dir, 1) * 0.5deg));
+        }
+    }
 }
 
 @layer base {

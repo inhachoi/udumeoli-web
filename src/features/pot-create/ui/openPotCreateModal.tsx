@@ -4,12 +4,14 @@ import confetti from "canvas-confetti"
 import { ButtonCta } from "@/shared/ui/button-cta"
 import { NumberCode } from "@/shared/ui/number-code"
 import { TextField } from "@/shared/ui/text-field"
+import { Tooltip } from "@/shared/ui/tooltip"
 import {
   BottomSheetScreenHeader,
   openBottomSheet,
 } from "@/shared/ui/bottom-sheet"
 import { showToast } from "@/shared/ui/toast"
 import { usePotStore } from "@/entities/travel-pot"
+import { useSessionStore } from "@/entities/user"
 import partySrc from "@/shared/assets/party.svg"
 
 function CreatedStep({
@@ -68,7 +70,11 @@ function CreatedStep({
         </div>
         <NumberCode value={code} readOnly />
       </div>
-      <div className="w-full px-4 pb-[34px]">
+      <div className="flex w-full flex-col items-center gap-[25px] px-4 pb-[34px]">
+        {/* 최대 인원 안내 — 첫 생성 후 상시 노출, 자동 사라짐 없음 (Figma 1374-173 #7-2) */}
+        <Tooltip direction="bottom">
+          최대 6명까지 함께할 수 있어요. (1/6)
+        </Tooltip>
         <ButtonCta onClick={share}>초대코드 공유하기</ButtonCta>
       </div>
     </>
@@ -77,6 +83,7 @@ function CreatedStep({
 
 function PotCreateSheet({ close }: { close: () => void }) {
   const createPot = usePotStore((s) => s.createPot)
+  const currentUser = useSessionStore((s) => s.currentUser)
   const [name, setName] = React.useState("")
   const [created, setCreated] = React.useState<{
     name: string
@@ -108,7 +115,12 @@ function PotCreateSheet({ close }: { close: () => void }) {
         <ButtonCta
           disabled={!name.trim()}
           onClick={() => {
-            const pot = createPot(name.trim())
+            // 세션 유저를 생성자 멤버로 전달 — 새 팟에서도 내 슬롯이 인식되도록
+            const pot = createPot(name.trim(), {
+              id: currentUser?.id ?? "me",
+              nickname: currentUser?.nickname ?? "나",
+              profileImageUrl: currentUser?.profileImageUrl ?? null,
+            })
             setCreated({ name: pot.name, code: pot.inviteCode })
           }}
         >
