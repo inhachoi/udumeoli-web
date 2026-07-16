@@ -3,8 +3,6 @@ import * as React from "react"
 import { Map as MapGL, Marker } from "react-map-gl/maplibre"
 import { feature as toFeature, merge as toMerge } from "topojson-client"
 import { Plus } from "lucide-react"
-import { POPULAR_REGIONS } from "../model/popular-regions"
-import { RegionCardCarousel } from "./RegionCardCarousel"
 import { useRegionHighlight } from "./useRegionHighlight"
 import type { MapRef } from "react-map-gl/maplibre"
 import type { Map as MapLibreMap } from "maplibre-gl"
@@ -16,7 +14,11 @@ import {
   useAllPhotos,
   usePhotoUploadStore,
 } from "@/entities/photo"
-import { formatRegionName, useRegionColorStore } from "@/entities/region"
+import {
+  POPULAR_REGIONS,
+  formatRegionName,
+  useRegionColorStore,
+} from "@/entities/region"
 import { usePotStore } from "@/entities/travel-pot"
 import { useSessionStore } from "@/entities/user"
 import { ButtonIcon } from "@/shared/ui/button-icon"
@@ -30,6 +32,7 @@ import {
 } from "@/features/region-decorate"
 import iconAddSrc from "@/shared/assets/icon-add.svg"
 import iconArrowLeftSrc from "@/shared/assets/icon-arrow-left.svg"
+import { RegionCardCarousel } from "@/shared/ui/region-card-carousel"
 
 const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_API_KEY as string
 const MAP_STYLE = `https://api.maptiler.com/maps/019f1dec-144a-7e9c-9ab5-4398b89987f9/style.json?key=${MAPTILER_KEY}`
