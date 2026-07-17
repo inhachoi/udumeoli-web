@@ -143,7 +143,7 @@ function openPermissionFlow() {
   )
 }
 
-// 가입 완료 팝업 — /map 이동 후 표시 (그래픽은 추후 교체 예정 placeholder)
+// 가입 완료 팝업 — /map-google 이동 후 표시 (그래픽은 추후 교체 예정 placeholder)
 // 확인 버튼(onConfirm)만 온보딩으로 이어지고, X(onClose)는 그냥 닫는다
 function SignupCompleteContent({
   nickname,
@@ -204,11 +204,11 @@ export function SignupPage() {
     openPermissionFlow()
   }, [])
 
-  // 가입 완료 → /map으로 이동한 뒤 완료 팝업 표시 (OverlayProvider가 __root에 있어 라우트 이동 후에도 열 수 있음)
+  // 가입 완료 → /map-google로 이동한 뒤 완료 팝업 표시 (OverlayProvider가 __root에 있어 라우트 이동 후에도 열 수 있음)
   const handleSubmit = async () => {
     const name = nickname.trim()
     login({ ...MOCK_USER, nickname: name, profileImageUrl: profileImage })
-    await router.navigate({ to: "/map" })
+    await router.navigate({ to: "/map-google" })
     openModal(
       ({ close }) => (
         <SignupCompleteContent
