@@ -11,7 +11,6 @@
 import { Route as rootRouteImport } from './app/routes/__root'
 import { Route as SignupRouteImport } from './app/routes/signup'
 import { Route as MapGoogleRouteImport } from './app/routes/map-google'
-import { Route as MapRouteImport } from './app/routes/map'
 import { Route as IndexRouteImport } from './app/routes/index'
 
 const SignupRoute = SignupRouteImport.update({
@@ -24,11 +23,6 @@ const MapGoogleRoute = MapGoogleRouteImport.update({
   path: '/map-google',
   getParentRoute: () => rootRouteImport,
 } as any)
-const MapRoute = MapRouteImport.update({
-  id: '/map',
-  path: '/map',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -37,34 +31,30 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/map': typeof MapRoute
   '/map-google': typeof MapGoogleRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/map': typeof MapRoute
   '/map-google': typeof MapGoogleRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/map': typeof MapRoute
   '/map-google': typeof MapGoogleRoute
   '/signup': typeof SignupRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map' | '/map-google' | '/signup'
+  fullPaths: '/' | '/map-google' | '/signup'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/map' | '/map-google' | '/signup'
-  id: '__root__' | '/' | '/map' | '/map-google' | '/signup'
+  to: '/' | '/map-google' | '/signup'
+  id: '__root__' | '/' | '/map-google' | '/signup'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  MapRoute: typeof MapRoute
   MapGoogleRoute: typeof MapGoogleRoute
   SignupRoute: typeof SignupRoute
 }
@@ -85,13 +75,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapGoogleRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/map': {
-      id: '/map'
-      path: '/map'
-      fullPath: '/map'
-      preLoaderRoute: typeof MapRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -104,7 +87,6 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  MapRoute: MapRoute,
   MapGoogleRoute: MapGoogleRoute,
   SignupRoute: SignupRoute,
 }
